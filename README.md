@@ -80,3 +80,4 @@ let g:multi_cursor_quit_key='<Esc>'
 * vim-snippets
 * vim-twig
 * emmet
+* syntastic (https://github.com/scrooloose/syntastic)
