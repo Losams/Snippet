@@ -28,6 +28,14 @@
     ailing_white_space_on_save": true
 }
 
+##  .screeenrc
+
+This is life changing. Redraw your terminal faster than before, no lag drawin anymore.
+
+```
+maptimeout 0
+```
+
 ## .vimrc
 
 ```
