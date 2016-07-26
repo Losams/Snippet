@@ -83,6 +83,7 @@ if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 
+
 " unicode symbols
 let g:airline_left_sep = '»'
 let g:airline_left_sep = '▶'
@@ -126,3 +127,7 @@ let g:syntastic_check_on_wq = 0
 "=====[ Correct mistypings ]=====
 iab retrun return
 iab functoin function
+
+
+"=====[ automatically reload vimrc on save ]=====
+au BufWritePost .vimrc so ~/.vimrc
