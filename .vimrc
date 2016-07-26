@@ -107,6 +107,8 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
+
+"=====[ MultiCursor ]=====
 let g:multi_cursor_use_default_mapping=0
 let g:multi_cursor_next_key='<C-d>'
 let g:multi_cursor_quit_key='<Esc>'
@@ -131,3 +133,7 @@ iab functoin function
 
 "=====[ automatically reload vimrc on save ]=====
 au BufWritePost .vimrc so ~/.vimrc
+
+
+"=====[ On vim load, toggle NERDTree and switch to file ]=====
+autocmd VimEnter * :NERDTreeToggle | wincmd l 
