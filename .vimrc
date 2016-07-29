@@ -65,11 +65,11 @@ nmap <C-l> :TagbarToggle<CR>
 
 
 "=====[ Ctag config (currently not working) ]=====
-function CreateTags()
-    let curNodePath = g:NERDTreeFileNode.GetSelected().path.str()
-    exec ':!ctags -R --languages=php -f ' . curNodePath . '/tags ' . curNodePath
-endfunction
-nmap <silent> <F8> :call CreateTags()<CR>
+"function CreateTags()
+"    let curNodePath = g:NERDTreeFileNode.GetSelected().path.str()
+"    exec ':!ctags -R --languages=php -f ' . curNodePath . '/tags ' . curNodePath
+"endfunction
+"nmap <silent> <F8> :call CreateTags()<CR>
 
 
 "=====[ Vim airline (always display not only on split) ]=====
@@ -136,4 +136,7 @@ au BufWritePost .vimrc so ~/.vimrc
 
 
 "=====[ On vim load, toggle NERDTree and switch to file ]=====
-autocmd VimEnter * :NERDTreeToggle | wincmd l 
+augroup vimrc
+    autocmd!
+    autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) | NERDTreeToggle | wincmd l | endif
+augroup END
