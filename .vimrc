@@ -1,5 +1,4 @@
 syntax on
- 
 
 "=====[ Monokai Dark ]=====
 let g:solarized_termcolors=256
@@ -8,16 +7,34 @@ colorscheme monokai
 
 
 "=====[ IDE Settings ]=====
+let mapleader=","
+
+set nocompatible
+"set cursorline
+set lazyredraw
+set showmatch
 set clipboard=unnamed
 set autoindent
+set ttyfast
 set smartindent
 set number
-set relativenumber
+"set relativenumber
 set colorcolumn=90
 set tabstop=4 "show existing tab with 4 spaces width
 set shiftwidth=4 "when indenting with '>', use 4 spaces width
 set expandtab "On pressing tab, insert 4 spaces
+set undodir=~/.vim/undodir
 
+
+"=====[ Search ]=====
+set path+=**
+
+"=====[ CtrlSf Search ]=====
+let g:ctrlsf_default_view_mode = 'compact'
+
+"=====[ Mouvment ]=====
+"nnoremap j gj
+"nnoremap k gk
 
 "=====[ Smart search ]=====
 set incsearch "Lookahead as search pattern is specified
@@ -31,8 +48,9 @@ filetype plugin on
 
 
 "=====[ Scroll performance ]=====
-set timeoutlen=1000
-set ttimeoutlen=0
+set timeoutlen=30
+" set timeoutlen=1000
+" set ttimeout=0
 
 
 "=====[ Escape disable multiselectCursor ]=====
@@ -52,6 +70,10 @@ execute pathogen#infect()
 filetype plugin indent on
 
 
+"=====[ Phpdoc ]=====
+map <C-k> :call PhpDoc()<CR>
+
+
 "=====[ NERDTree Binds ]=====
 map <C-n> :NERDTreeToggle<CR>
 
@@ -59,17 +81,14 @@ map <C-n> :NERDTreeToggle<CR>
 "=====[ CtrlP Binds ]=====
 map <C-b> :CtrlPBuffer<CR>
 
-
-"=====[ Tagbar Binds ]=====
-nmap <C-l> :TagbarToggle<CR>
-
+"=====[ Tagbar ]=====
+nmap <C-l> :TagbarToggle<CR><C-w>l
 
 "=====[ Ctag config (currently not working) ]=====
-"function CreateTags()
-"    let curNodePath = g:NERDTreeFileNode.GetSelected().path.str()
-"    exec ':!ctags -R --languages=php -f ' . curNodePath . '/tags ' . curNodePath
-"endfunction
-"nmap <silent> <F8> :call CreateTags()<CR>
+function CreateTags()
+    :execute 'silent !ctags -R .' | redraw!
+endfunction
+nmap <silent> <Leader>t :call CreateTags()<CR>
 
 
 "=====[ Vim airline (always display not only on split) ]=====
@@ -115,10 +134,6 @@ let g:multi_cursor_quit_key='<Esc>'
 
 
 "=====[ Syntesis ]=====
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
@@ -138,5 +153,5 @@ au BufWritePost .vimrc so ~/.vimrc
 "=====[ On vim load, toggle NERDTree and switch to file ]=====
 augroup vimrc
     autocmd!
-    autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) | NERDTreeToggle | wincmd l | endif
+    autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) | NERDTreeToggle | wincmd l | :q | endif
 augroup END
