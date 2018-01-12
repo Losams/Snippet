@@ -10,7 +10,7 @@ colorscheme monokai
 let mapleader=","
 
 set nocompatible
-"set cursorline
+set cursorline
 set lazyredraw
 set showmatch
 set clipboard=unnamed
@@ -23,11 +23,26 @@ set colorcolumn=90
 set tabstop=4 "show existing tab with 4 spaces width
 set shiftwidth=4 "when indenting with '>', use 4 spaces width
 set expandtab "On pressing tab, insert 4 spaces
-set undodir=~/.vim/undodir
+set foldmethod=indent
+set nofoldenable "disable default folding
+set updatetime=750
+
+
+"=====[ Persistant undo ]=====
+if !isdirectory($HOME."/.vim")
+    call mkdir($HOME."/.vim", "", 0770)
+endif
+if !isdirectory($HOME."/.vim/undo-dir")
+    call mkdir($HOME."/.vim/undo-dir", "", 0700)
+endif
+set undodir=~/.vim/undo-dir
+set undofile
 
 
 "=====[ Search ]=====
 set path+=**
+"auto highlight same word
+
 
 "=====[ CtrlSf Search ]=====
 let g:ctrlsf_default_view_mode = 'compact'
@@ -76,13 +91,21 @@ map <C-k> :call PhpDoc()<CR>
 
 "=====[ NERDTree Binds ]=====
 map <C-n> :NERDTreeToggle<CR>
+"On vim load, toggle NERDTree and switch to file
+augroup vimrc
+    autocmd!
+    autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) | NERDTreeToggle | wincmd l | :q | endif
+augroup END
 
 
 "=====[ CtrlP Binds ]=====
 map <C-b> :CtrlPBuffer<CR>
 
+
 "=====[ Tagbar ]=====
 nmap <C-l> :TagbarToggle<CR><C-w>l
+au BufReadPost,BufNewFile *.php TagbarOpen
+
 
 "=====[ Ctag config (currently not working) ]=====
 function CreateTags()
@@ -148,10 +171,3 @@ iab functoin function
 
 "=====[ automatically reload vimrc on save ]=====
 au BufWritePost .vimrc so ~/.vimrc
-
-
-"=====[ On vim load, toggle NERDTree and switch to file ]=====
-augroup vimrc
-    autocmd!
-    autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) | NERDTreeToggle | wincmd l | :q | endif
-augroup END
