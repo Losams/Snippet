@@ -1,5 +1,10 @@
 syntax on
 
+
+"=====[ Init Pathogen ]=====
+execute pathogen#infect()
+
+
 "=====[ Monokai Dark ]=====
 let g:solarized_termcolors=256
 set t_Co=256
@@ -8,6 +13,9 @@ colorscheme monokai
 
 "=====[ IDE Settings ]=====
 let mapleader=","
+
+set autoread                                                              
+au FocusGained,BufEnter * :silent! !
 
 set nocompatible
 set cursorline
@@ -69,16 +77,12 @@ set timeoutlen=30
 
 
 "=====[ Escape disable multiselectCursor ]=====
-nnoremap <silent> <Esc> :nohlsearch<Bar>:echo<CR>
+"nnoremap <silent> <Esc> :nohlsearch<Bar>:echo<CR>
 
 
 "=====[ Set syntax for file type ]=====
 au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
-au BufRead,BufNewFile *.html.twig setfiletype=html
-
-
-"=====[ Init Pathogen ]=====
-execute pathogen#infect()
+"au BufNewFile,BufFilePre,BufRead *.html.twig   set filetype=html
 
 
 "=====[ Indent ]=====
@@ -87,6 +91,7 @@ filetype plugin indent on
 
 "=====[ Phpdoc ]=====
 map <C-k> :call PhpDoc()<CR>
+let g:pdv_cfg_ClassTags = []
 
 
 "=====[ NERDTree Binds ]=====
@@ -100,18 +105,28 @@ augroup END
 
 "=====[ CtrlP Binds ]=====
 map <C-b> :CtrlPBuffer<CR>
+map <silent> <C-j> :CtrlPTag<cr><C-\>w
 
 
 "=====[ Tagbar ]=====
-nmap <C-l> :TagbarToggle<CR><C-w>l
-au BufReadPost,BufNewFile *.php TagbarOpen
+"nmap <C-l> :TagbarToggle<CR><C-w>l
+"au BufReadPost,BufNewFile *.php TagbarOpen
 
 
 "=====[ Ctag config (currently not working) ]=====
-function CreateTags()
-    :execute 'silent !ctags -R .' | redraw!
-endfunction
-nmap <silent> <Leader>t :call CreateTags()<CR>
+"function CreateTags()
+"    :execute 'silent !ctags -R .' | redraw!
+"endfunction
+"nmap <silent> <Leader>t :call CreateTags()<CR>
+
+
+"=====[ GUTENTAGS ]=====
+let g:gutentags_cache_dir = '~/.vim/gutentags'
+let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js', '*.json', '*.xml',
+                            \ '*.phar', '*.ini', '*.rst', '*.md',
+                            \ '*vendor/*/test*', '*vendor/*/Test*',
+                            \ '*vendor/*/fixture*', '*vendor/*/Fixture*',
+                            \ '*var/cache*', '*var/log*']
 
 
 "=====[ Vim airline (always display not only on split) ]=====
@@ -162,6 +177,10 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_php_phpcs_args = '--standard=Symfony'
+let g:syntastic_phpcs_disable = 1
+let g:syntastic_phpmd_disable = 1
+let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
 
 
 "=====[ Correct mistypings ]=====
