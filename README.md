@@ -52,3 +52,6 @@ maptimeout 0
 * vim-twig
 * emmet
 * syntastic (https://github.com/scrooloose/syntastic)
+* vim-paste-easy
+* vim-gutentags
+* twig.vim
