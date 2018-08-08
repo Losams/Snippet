@@ -47,6 +47,10 @@ set undodir=~/.vim/undo-dir
 set undofile
 
 
+"=====[ SnipMate ]=====
+let g:snipMate = { 'override' : 1 }
+
+
 "=====[ Search ]=====
 set path+=**
 "auto highlight same word
@@ -56,8 +60,8 @@ set path+=**
 let g:ctrlsf_default_view_mode = 'compact'
 
 "=====[ Mouvment ]=====
-"nnoremap j gj
-"nnoremap k gk
+nnoremap j gj
+nnoremap k gk
 
 "=====[ Smart search ]=====
 set incsearch "Lookahead as search pattern is specified
@@ -71,17 +75,20 @@ filetype plugin on
 
 
 "=====[ Scroll performance ]=====
-set timeoutlen=30
+" set timeoutlen=30
 " set timeoutlen=1000
 " set ttimeout=0
 
 
-"=====[ Escape disable multiselectCursor ]=====
-"nnoremap <silent> <Esc> :nohlsearch<Bar>:echo<CR>
+"=====[ Remove highlight by taping esc two time ]=====
+nnoremap <esc><esc> :nohl<cr>
 
 
 "=====[ Set syntax for file type ]=====
 au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
+au BufNewFile,BufFilePre,BufRead *.phtml set filetype=html
+au BufNewFile,BufFilePre,BufRead *.vue set filetype=js
+autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 "au BufNewFile,BufFilePre,BufRead *.html.twig   set filetype=html
 
 
@@ -92,6 +99,25 @@ filetype plugin indent on
 "=====[ Phpdoc ]=====
 map <C-k> :call PhpDoc()<CR>
 let g:pdv_cfg_ClassTags = []
+let g:pdv_cfg_autoEndFunction = 0 "to remove end of function comment
+let g:pdv_cfg_autoEndClass = 0 "to remove end of function comment
+let g:pdv_cfg_php4always = 0 "to remove @access property 
+
+
+"=====[ Vim Namespace ]=====
+function! IPhpInsertUse()
+    call PhpInsertUse()
+    call feedkeys('a',  'n')
+endfunction
+autocmd FileType php inoremap <Leader>u <Esc>:call IPhpInsertUse()<CR>
+autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
+
+function! IPhpExpandClass()
+    call PhpExpandClass()
+    call feedkeys('a', 'n')
+endfunction
+autocmd FileType php inoremap <Leader>e <Esc>:call IPhpExpandClass()<CR>
+autocmd FileType php noremap <Leader>e :call PhpExpandClass()<CR>
 
 
 "=====[ NERDTree Binds ]=====
