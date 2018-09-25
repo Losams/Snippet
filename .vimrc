@@ -35,6 +35,9 @@ set foldmethod=indent
 set nofoldenable "disable default folding
 set updatetime=750
 
+" remove include file on autocomplete (slow down)
+setglobal complete-=i
+
 
 "=====[ Persistant undo ]=====
 if !isdirectory($HOME."/.vim")
@@ -74,6 +77,11 @@ set hlsearch "highlight all matches
 filetype plugin on
 
 
+"=====[ GitButter ]=====
+let g:gitgutter_realtime = 0
+let g:gitgutter_async = 0 " add this for conflict with namespace bundle
+
+
 "=====[ Scroll performance ]=====
 " set timeoutlen=30
 " set timeoutlen=1000
@@ -85,6 +93,7 @@ nnoremap <esc><esc> :nohl<cr>
 
 
 "=====[ Set syntax for file type ]=====
+au BufNewFile,BufFilePre,BufRead *.php set filetype=php
 au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 au BufNewFile,BufFilePre,BufRead *.phtml set filetype=html
 au BufNewFile,BufFilePre,BufRead *.vue set filetype=js
