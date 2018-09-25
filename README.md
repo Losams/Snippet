@@ -55,3 +55,4 @@ maptimeout 0
 * vim-paste-easy
 * vim-gutentags
 * twig.vim
+* git-blame.vim
